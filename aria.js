@@ -5,13 +5,11 @@
 	aria.types = {
 		trueFalse: function () { return {
 			get: function (attributeValue) {
-				if (attributeValue == 'true') {
+				if (attributeValue == 'true')
 					return true;
-				} else if (attributeValue == 'false' || attributeValue == null) {
+				if (attributeValue == 'false' || attributeValue == null)
 					return false;
-				} else {
-					throw new TypeError('"' + attributeValue + '" is not true/false');
-				}
+				throw new TypeError('"' + attributeValue + '" is not true/false');
 			},
 			set: function (value) {
 				return Boolean(value).toString();
@@ -42,6 +40,18 @@
 			},
 			set: function (value) {
 				return Boolean(value).toString();
+			}
+		}},
+		idReference: function () { return {
+			get: function (attributeValue) {
+				return document.getElementById(attributeValue);
+			},
+			set: function (value) {
+				if (value instanceof HTMLElement)
+					return value.id;
+				if (typeof value == 'string')
+					return value || null;
+				throw new TypeError('The value is not an ID reference');
 			}
 		}}
 	};

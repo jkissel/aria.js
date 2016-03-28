@@ -143,3 +143,23 @@ QUnit.module('aria.types.trueFalseUndefined', () => {
 	});
 
 });
+
+QUnit.module('aria.types.idReference', () => {
+
+	let type = aria.types.idReference();
+
+	QUnit.test('get()', assert => {
+		assert.strictEqual(type.get('qunit-fixture'), QUnit.fixture(), 'Returns the referenced element');
+		assert.strictEqual(type.get('invalid'), null, 'Returns null for an invalid reference');
+		assert.strictEqual(type.get('41'), null, 'Returns null for an invalid ID');
+		assert.strictEqual(type.get(null), null, 'Returns null for null');
+	});
+
+	QUnit.test('set()', assert => {
+		assert.strictEqual(type.set('ID'), 'ID', 'Returns a given string');
+		assert.strictEqual(type.set(QUnit.fixture()), 'qunit-fixture', 'Returns the ID of a given element');
+		assert.strictEqual(type.set(document.body), '', 'Returns an empty string for an element without an ID');
+		assert.throws(() => type.set(true), TypeError, 'Throws TypeError for any other value');
+	});
+
+});
