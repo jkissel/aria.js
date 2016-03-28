@@ -26,3 +26,18 @@ QUnit.test('Only properties can be set whose corresponding attributes are define
 	assert.notOk(ariaInstance.hasOwnProperty('undefined'), 'An undefined property cannot be added');
 
 });
+
+QUnit.test('Properties are proxies to the corresponding aria-prefixed element attributes', assert => {
+
+	aria.attributes.label = {};
+
+	let element = QUnit.fixture();
+	let ariaInstance = aria(element);
+
+	element.setAttribute('aria-label', 'value');
+	assert.equal(ariaInstance.label, 'value', 'The value of the attribute is also the property value');
+
+	ariaInstance.label = 'another value';
+	assert.equal(element.getAttribute('aria-label'), 'another value', 'When assigning the property, the attribute value is also set');
+
+});
