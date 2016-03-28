@@ -5,12 +5,13 @@
 	aria.types = {
 		trueFalse: function () { return {
 			get: function (attributeValue) {
-				if (attributeValue == 'true')
+				if (attributeValue == 'true') {
 					return true;
-				else if (attributeValue == 'false' || attributeValue == null)
+				} else if (attributeValue == 'false' || attributeValue == null) {
 					return false;
-				else
+				} else {
 					throw new TypeError('"' + attributeValue + '" is not true/false');
+				}
 			},
 			set: function (value) {
 				return Boolean(value).toString();
@@ -18,34 +19,26 @@
 		}},
 		tristate: function () { return {
 			get: function (attributeValue) {
-				if (attributeValue == 'true')
-					return true;
-				else if (attributeValue == 'false')
-					return false;
-				else if (attributeValue == 'mixed')
-					return 'mixed';
-				else if (attributeValue == null)
-					return undefined;
-				else
-					throw new TypeError('"' + attributeValue + '" is not tristate');
+				switch (attributeValue) {
+				case 'true':  return  true;
+				case 'false': return  false;
+				case 'mixed': return 'mixed';
+				case  null :  return  undefined;
+				default:      throw new TypeError('"' + attributeValue + '" is not tristate');
+				}
 			},
 			set: function (value) {
-				if (value == 'mixed')
-					return 'mixed';
-				else
-					return Boolean(value).toString();
+				return (value == 'mixed') ? 'mixed' : Boolean(value).toString();
 			}
 		}},
 		trueFalseUndefined: function () { return {
 			get: function (attributeValue) {
-				if (attributeValue == 'true')
-					return true;
-				else if (attributeValue == 'false')
-					return false;
-				else if (attributeValue == null)
-					return undefined;
-				else
-					throw new TypeError('"' + attributeValue + '" is not true/false/undefined');
+				switch (attributeValue) {
+				case 'true':  return true;
+				case 'false': return false;
+				case  null :  return undefined;
+				default:      throw new TypeError('"' + attributeValue + '" is not true/false/undefined');
+				}
 			},
 			set: function (value) {
 				return Boolean(value).toString();
