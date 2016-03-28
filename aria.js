@@ -34,7 +34,11 @@
 				return valueConverter.get(element.getAttribute(prefixedAttributeName));
 			},
 			set: function (value) {
-				element.setAttribute(prefixedAttributeName, valueConverter.set(value));
+				if (value == null) {
+					element.removeAttribute(prefixedAttributeName);
+				} else {
+					element.setAttribute(prefixedAttributeName, valueConverter.set(value));
+				}
 			}
 		};
 	}

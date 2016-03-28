@@ -59,3 +59,15 @@ QUnit.test('Values are converted using the get() and set() functions defined the
 	assert.equal(element.getAttribute('aria-label'), '(another value)', 'A value assigned to the property is converted using set() before being set as attribute value');
 
 });
+
+QUnit.test('When assigning null to the property, the element attribute is removed', assert => {
+
+	aria.attributes.label = {};
+
+	let element = QUnit.fixture();
+
+	element.setAttribute('aria-label', 'value');
+	aria(element).label = null;
+	assert.notOk(element.hasAttribute('aria-label'), 'The attribute was removed');
+
+});
