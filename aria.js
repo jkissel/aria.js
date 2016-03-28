@@ -10,6 +10,10 @@
 		}
 
 		if (element) {
+			if (element.aria) {
+				return element.aria;
+			}
+
 			var propertiesObject = {};
 			for (var attributeName in aria.attributes) {
 				propertiesObject[attributeName] = propertyDescriptor(
@@ -18,7 +22,9 @@
 						aria.attributes[attributeName]);
 			}
 
-			return Object.seal(Object.create(Object.prototype, propertiesObject));
+			var ariaInstance = Object.seal(Object.create(Object.prototype, propertiesObject));
+			element.aria = ariaInstance;
+			return ariaInstance;
 		} else {
 			return null;
 		}

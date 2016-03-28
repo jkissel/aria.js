@@ -3,6 +3,8 @@
 
 QUnit.fixture = () => document.getElementById('qunit-fixture');
 
+QUnit.testDone(() => QUnit.fixture().aria = null);
+
 QUnit.test('aria() returns an aria instance when given an element or a valid element ID, otherwise null', assert => {
 
 	assert.ok(aria(QUnit.fixture()), 'Returns an aria instance when given an element');
@@ -10,6 +12,14 @@ QUnit.test('aria() returns an aria instance when given an element or a valid ele
 
 	assert.strictEqual(aria(), null, 'Returns null when given no parameters');
 	assert.strictEqual(aria('invalid'), null, 'Returns null when given an invalid element ID');
+
+});
+
+QUnit.test('aria() caches the aria instance', assert => {
+
+	let element = QUnit.fixture();
+
+	assert.ok(aria(element) === aria(element), 'Returns the same aria instance when given the same element again');
 
 });
 
@@ -60,7 +70,7 @@ QUnit.test('Values are converted using the get() and set() functions defined the
 
 });
 
-QUnit.test('When assigning null to the property, the element attribute is removed', assert => {
+QUnit.test('When assigning null (or undefined) to the property, the element attribute is removed', assert => {
 
 	aria.attributes.label = {};
 
