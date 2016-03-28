@@ -102,6 +102,28 @@ QUnit.module('aria.types.trueFalse', () => {
 
 });
 
+QUnit.module('aria.types.tristate', () => {
+
+	let type = aria.types.tristate();
+
+	QUnit.test('get()', assert => {
+		assert.strictEqual(type.get('true'), true, 'Returns true for "true"');
+		assert.strictEqual(type.get('false'), false, 'Returns false for "false"');
+		assert.strictEqual(type.get('mixed'), 'mixed', 'Returns "mixed" for "mixed"');
+		assert.strictEqual(type.get(null), undefined, 'Returns undefined for null');
+		assert.throws(() => type.get('string'), TypeError, 'Throws TypeError for any other string');
+	});
+
+	QUnit.test('set()', assert => {
+		assert.strictEqual(type.set(true), 'true', 'Returns "true" for true');
+		assert.strictEqual(type.set(false), 'false', 'Returns "false" for false');
+		assert.strictEqual(type.set(1), 'true', 'Returns "true" for truthy');
+		assert.strictEqual(type.set(0), 'false', 'Returns "false" for falsy');
+		assert.strictEqual(type.set('mixed'), 'mixed', 'Returns "mixed" for "mixed"');
+	});
+
+});
+
 QUnit.module('aria.types.trueFalseUndefined', () => {
 
 	let type = aria.types.trueFalseUndefined();

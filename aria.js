@@ -16,6 +16,26 @@
 				return Boolean(value).toString();
 			}
 		}},
+		tristate: function () { return {
+			get: function (attributeValue) {
+				if (attributeValue == 'true')
+					return true;
+				else if (attributeValue == 'false')
+					return false;
+				else if (attributeValue == 'mixed')
+					return 'mixed';
+				else if (attributeValue == null)
+					return undefined;
+				else
+					throw new TypeError('"' + attributeValue + '" is not tristate');
+			},
+			set: function (value) {
+				if (value == 'mixed')
+					return 'mixed';
+				else
+					return Boolean(value).toString();
+			}
+		}},
 		trueFalseUndefined: function () { return {
 			get: function (attributeValue) {
 				if (attributeValue == 'true')
