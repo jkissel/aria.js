@@ -41,3 +41,21 @@ QUnit.test('Properties are proxies to the corresponding aria-prefixed element at
 	assert.equal(element.getAttribute('aria-label'), 'another value', 'When assigning the property, the attribute value is also set');
 
 });
+
+QUnit.test('Values are converted using the get() and set() functions defined the attribute definition', assert => {
+
+	aria.attributes.label = {
+		get: attributeValue => attributeValue.slice(1, -1),
+		set: value => `(${value})`
+	};
+
+	let element = QUnit.fixture();
+	let ariaInstance = aria(element);
+
+	element.setAttribute('aria-label', '(value)');
+	assert.equal(ariaInstance.label, 'value', 'The attribute value is converted using get() before being returned as property value');
+
+	ariaInstance.label = 'another value';
+	assert.equal(element.getAttribute('aria-label'), '(another value)', 'A value assigned to the property is converted using set() before being set as attribute value');
+
+});
