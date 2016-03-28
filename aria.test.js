@@ -81,3 +81,23 @@ QUnit.test('When assigning null (or undefined) to the property, the element attr
 	assert.notOk(element.hasAttribute('aria-label'), 'The attribute was removed');
 
 });
+
+QUnit.module('aria.types.trueFalse', () => {
+
+	let type = aria.types.trueFalse();
+
+	QUnit.test('get()', assert => {
+		assert.strictEqual(type.get('true'), true, 'Returns true for "true"');
+		assert.strictEqual(type.get('false'), false, 'Returns false for "false"');
+		assert.strictEqual(type.get(null), false, 'Returns false for null');
+		assert.throws(() => type.get('string'), TypeError, 'Throws TypeError for any other string');
+	});
+
+	QUnit.test('set()', assert => {
+		assert.strictEqual(type.set(true), 'true', 'Returns "true" for true');
+		assert.strictEqual(type.set(false), 'false', 'Returns "false" for false');
+		assert.strictEqual(type.set(1), 'true', 'Returns "true" for truthy');
+		assert.strictEqual(type.set(0), 'false', 'Returns "false" for falsy');
+	});
+
+});

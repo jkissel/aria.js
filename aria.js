@@ -1,5 +1,22 @@
 (function () { 'use strict';
 
+	// https://www.w3.org/TR/wai-aria/states_and_properties#propcharacteristic_value
+
+	aria.types = {
+		trueFalse: function () { return {
+			get: function (attributeValue) {
+				if (attributeValue == 'true')
+					return true;
+				else if (attributeValue == 'false' || attributeValue == null)
+					return false;
+				else throw new TypeError('"' + attributeValue + '" is not true/false');
+			},
+			set: function (value) {
+				return Boolean(value).toString();
+			}
+		}}
+	};
+
 	aria.attributes = {};
 
 	window.aria = aria;
