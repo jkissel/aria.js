@@ -6,7 +6,12 @@
 		}
 
 		if (element) {
-			return {};
+			var propertiesObject = {};
+			for (var attributeName in aria.attributes) {
+				propertiesObject[attributeName] = { set: function () { } };
+			}
+
+			return Object.seal(Object.create(Object.prototype, propertiesObject));
 		} else {
 			return null;
 		}
