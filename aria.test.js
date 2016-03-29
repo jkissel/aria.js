@@ -164,6 +164,26 @@ QUnit.module('aria.types.idReference', () => {
 
 });
 
+QUnit.module('aria.types.integer', () => {
+
+	let type = aria.types.integer();
+
+	QUnit.test('get()', assert => {
+		assert.strictEqual(type.get('42'), 42, 'Returns the number parsed from a given string');
+		assert.strictEqual(type.get('3.6'), 3, 'Removes decimal places from that number');
+		assert.strictEqual(type.get('-3.6'), -3, 'Does this correctly also for negative numbers');
+		assert.ok(Number.isNaN(type.get(null)), 'Returns NaN for null');
+	});
+
+	QUnit.test('set()', assert => {
+		assert.strictEqual(type.set(42), '42', 'Returns a string representation of a given number');
+		assert.strictEqual(type.set( 3.6), '3', 'Removes decimal places from that number');
+		assert.strictEqual(type.set(-3.6), '-3', 'Does this correctly also for negative numbers');
+		assert.strictEqual(type.set('string'), 'NaN', 'Returns "NaN" for any other value');
+	});
+
+});
+
 QUnit.module('aria.types.number', () => {
 
 	let type = aria.types.number();

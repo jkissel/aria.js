@@ -54,6 +54,18 @@
 				throw new TypeError('The value is not an ID reference');
 			}
 		}},
+		integer: function () { return {
+			get: function (attributeValue) {
+				var value = parseFloat(attributeValue);
+				if (! isNaN(value)) value = value | 0;
+				return value;
+			},
+			set: function (value) {
+				value = Number(value);
+				if (! isNaN(value)) value = value | 0;
+				return value.toString();
+			}
+		}},
 		number: function () { return {
 			get: function (attributeValue) {
 				return parseFloat(attributeValue);
