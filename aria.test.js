@@ -163,3 +163,19 @@ QUnit.module('aria.types.idReference', () => {
 	});
 
 });
+
+QUnit.module('aria.types.string', () => {
+
+	let type = aria.types.string();
+
+	QUnit.test('get()', assert => {
+		assert.strictEqual(type.get('string'), 'string', 'Returns a given string');
+		assert.strictEqual(type.get(null), null, 'Returns null for null');
+	});
+
+	QUnit.test('set()', assert => {
+		assert.strictEqual(type.set('string'), 'string', 'Returns a given string');
+		assert.ok(typeof type.set(true) == 'string', 'Converts any other value to a string representation (using String())');
+	});
+
+});

@@ -50,8 +50,16 @@
 				if (value instanceof HTMLElement)
 					return value.id;
 				if (typeof value == 'string')
-					return value || null;
+					return value;
 				throw new TypeError('The value is not an ID reference');
+			}
+		}},
+		string: function () { return {
+			get: function (attributeValue) {
+				return attributeValue;
+			},
+			set: function (value) {
+				return String(value);
 			}
 		}}
 	};
