@@ -54,6 +54,14 @@
 				throw new TypeError('The value is not an ID reference');
 			}
 		}},
+		number: function () { return {
+			get: function (attributeValue) {
+				return parseFloat(attributeValue);
+			},
+			set: function (value) {
+				return Number(value).toString();
+			}
+		}},
 		string: function () { return {
 			get: function (attributeValue) {
 				return attributeValue;

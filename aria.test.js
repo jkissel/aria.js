@@ -164,6 +164,22 @@ QUnit.module('aria.types.idReference', () => {
 
 });
 
+QUnit.module('aria.types.number', () => {
+
+	let type = aria.types.number();
+
+	QUnit.test('get()', assert => {
+		assert.strictEqual(type.get('42'), 42, 'Returns the number parsed from a given string');
+		assert.ok(Number.isNaN(type.get(null)), 'Returns NaN for null');
+	});
+
+	QUnit.test('set()', assert => {
+		assert.strictEqual(type.set(42), '42', 'Returns a string representation of a given number');
+		assert.strictEqual(type.set('string'), 'NaN', 'Returns "NaN" for any other value');
+	});
+
+});
+
 QUnit.module('aria.types.string', () => {
 
 	let type = aria.types.string();
@@ -175,7 +191,7 @@ QUnit.module('aria.types.string', () => {
 
 	QUnit.test('set()', assert => {
 		assert.strictEqual(type.set('string'), 'string', 'Returns a given string');
-		assert.ok(typeof type.set(true) == 'string', 'Converts any other value to a string representation (using String())');
+		assert.ok(typeof type.set(true) == 'string', 'Returns a string representation of any other value');
 	});
 
 });
