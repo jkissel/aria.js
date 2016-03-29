@@ -215,3 +215,27 @@ QUnit.module('aria.types.string', () => {
 	});
 
 });
+
+QUnit.module('aria.types.token', () => {
+
+	let type = aria.types.token([ 'foo', 'bar' ]);
+	let trueFalse = aria.types.token([ 'true', 'false' ]);
+
+	QUnit.test('get()', assert => {
+		assert.strictEqual(type.get('bar'), 'bar', 'Returns a given valid token');
+		assert.strictEqual(type.get(null), 'foo', 'Returns the default token for null');
+		assert.throws(() => type.get('true'), TypeError, 'Throws TypeError for any other string');
+
+		assert.strictEqual(trueFalse.get('true'), true, 'Returns true for "true", if latter is a valid token');
+		assert.strictEqual(trueFalse.get('false'), false, 'Returns false for "false", if latter is a valid token');
+	});
+
+	QUnit.test('set()', assert => {
+		assert.strictEqual(type.set('bar'), 'bar', 'Returns a given valid token');
+		assert.throws(() => type.get('true'), TypeError, 'Throws TypeError for any other string');
+
+		assert.strictEqual(trueFalse.set(true), 'true', 'Returns "true" for true, if first is a valid token');
+		assert.strictEqual(trueFalse.set(false), 'false', 'Returns "false" for false, if first is a valid token');
+	});
+
+});

@@ -81,6 +81,25 @@
 			set: function (value) {
 				return String(value);
 			}
+		}},
+		token: function (tokens) { return {
+			get: function (attributeValue) {
+				if (attributeValue == null)
+					return tokens[0];
+				if (tokens.indexOf(attributeValue) == -1)
+					throw new TypeError('Invalid token');
+				if (attributeValue == 'true')
+					return true;
+				if (attributeValue == 'false')
+					return false;
+				return attributeValue;
+			},
+			set: function (value) {
+				value = String(value);
+				if (tokens.indexOf(value) == -1)
+					throw new TypeError('Invalid token');
+				return value;
+			}
 		}}
 	};
 
