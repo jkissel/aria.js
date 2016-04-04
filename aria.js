@@ -54,6 +54,9 @@
 				throw new TypeError('The value is not an ID reference');
 			}
 		}},
+		idReferenceList: function () {
+			return aria.types.list(aria.types.idReference());
+		},
 		integer: function () { return {
 			get: function (attributeValue) {
 				var value = parseFloat(attributeValue);
@@ -99,6 +102,21 @@
 				if (tokens.indexOf(value) == -1)
 					throw new TypeError('Invalid token');
 				return value;
+			}
+		}},
+		tokenList: function (tokens, defaultValue) {
+			return aria.types.list(aria.types.token(tokens), defaultValue);
+		},
+		list: function (itemType, defaultValue) { return {
+			get: function (attributeValue) {
+				if (attributeValue == null)
+					return defaultValue || [];
+				return attributeValue.split(' ').map(itemType.get);
+			},
+			set: function (value) {
+				if (! Array.isArray(value))
+					value = [ value ];
+				return value.map(itemType.set).filter(identity).join(' ');
 			}
 		}}
 	};

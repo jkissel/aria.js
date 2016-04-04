@@ -239,3 +239,22 @@ QUnit.module('aria.types.token', () => {
 	});
 
 });
+
+QUnit.module('aria.types.list', () => {
+
+	let type = aria.types.list(aria.types.idReference());
+
+	QUnit.test('get()', assert => {
+		assert.deepEqual(type.get('qunit-fixture invalid'), [ QUnit.fixture(), null ], 'Returns an array of values for space separated list');
+		assert.deepEqual(type.get(null), [], 'Returns an empty array for null');
+
+		assert.deepEqual(aria.types.list(aria.types.idReference(), [ document.body ]).get(null), [ document.body ],
+				'Returns a default value for null if one was given');
+	});
+
+	QUnit.test('set()', assert => {
+		assert.deepEqual(type.set([ QUnit.fixture(), document.body ]), 'qunit-fixture', 'Returns space separated list for an array of values');
+		assert.deepEqual(type.set(QUnit.fixture()), 'qunit-fixture', 'Works also for single values');
+	});
+
+});
