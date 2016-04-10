@@ -121,7 +121,85 @@
 		}}
 	};
 
+	// https://www.w3.org/TR/wai-aria/states_and_properties#state_prop_def
+
+	var attributesByType = {
+		trueFalse: [
+			'atomic',
+			'busy',
+			'disabled',
+			'haspopup',
+			'hidden',
+			'multiline',
+			'multiselectable',
+			'readonly',
+			'required'
+		],
+		trueFalseUndefined: [
+			'expanded',
+			'grabbed',
+			'selected'
+		],
+		idReference: [
+			'activedescendant'
+		],
+		idReferenceList: [
+			'controls',
+			'describedby',
+			'flowto',
+			'labelledby',
+			'owns'
+		],
+		integer: [
+			'level',
+			'posinset',
+			'setsize'
+		],
+		number: [
+			'valuemax',
+			'valuemin',
+			'valuenow'
+		],
+		string: [
+			'label',
+			'valuetext'
+		],
+		token: [
+			'autocomplete',
+			'invalid',
+			'live',
+			'orientation'
+		],
+		tokenList: [
+			'dropeffect',
+			'relevant'
+		]
+	};
+
+	var typeArguments = {
+		autocomplete: [[ 'none', 'inline', 'list', 'both' ]],
+		invalid: [[ 'false', 'true', 'grammar', 'spelling' ]],
+		live: [[ 'off', 'polite', 'assertive' ]],
+		orientation: [[ 'horizontal', 'vertical' ]],
+		sort: [[ 'none', 'ascending', 'descending', 'other' ]],
+
+		dropeffect: [
+			[ 'copy', 'move', 'link', 'execute', 'popup', 'none' ],
+			[ 'none' ]
+		],
+		relevant: [
+			[ 'additions', 'removals', 'text', 'all' ],
+			[ 'additions', 'text' ]
+		]
+	};
+
 	aria.attributes = {};
+
+	for (var typeName in attributesByType) {
+		attributesByType[typeName].forEach(function (attributeName) {
+			aria.attributes[attributeName] = aria.types[typeName].apply(null, typeArguments[attributeName] || []);
+		});
+	}
 
 	window.aria = aria;
 

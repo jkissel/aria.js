@@ -82,6 +82,16 @@ QUnit.test('When assigning null (or undefined) to the property, the element attr
 
 });
 
+QUnit.test('Attributes are mapped to their type', (assert) => {
+
+	let ariaInstance = aria(QUnit.fixture());
+
+	// control samples
+	assert.strictEqual(ariaInstance.hidden, false, 'Sample 1');
+	assert.deepEqual(ariaInstance.dropeffect, [ 'none' ], 'Sample 2');
+
+});
+
 QUnit.module('aria.types.trueFalse', () => {
 
 	let type = aria.types.trueFalse();
