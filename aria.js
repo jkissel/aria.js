@@ -143,7 +143,7 @@
 						aria.attributes[attributeName]);
 			}
 
-			var ariaInstance = Object.seal(Object.create(Object.prototype, propertiesObject));
+			var ariaInstance = Object.seal(Object.create(aria.prototype, propertiesObject));
 			element.aria = ariaInstance;
 			return ariaInstance;
 		} else {

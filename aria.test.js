@@ -7,8 +7,8 @@ QUnit.testDone(() => QUnit.fixture().aria = null);
 
 QUnit.test('aria() returns an aria instance when given an element or a valid element ID, otherwise null', assert => {
 
-	assert.ok(aria(QUnit.fixture()), 'Returns an aria instance when given an element');
-	assert.ok(aria('qunit-fixture'), 'Returns an aria instance when given a valid element ID');
+	assert.ok(aria(QUnit.fixture()) instanceof aria, 'Returns an aria instance when given an element');
+	assert.ok(aria('qunit-fixture') instanceof aria, 'Returns an aria instance when given a valid element ID');
 
 	assert.strictEqual(aria(), null, 'Returns null when given no parameters');
 	assert.strictEqual(aria('invalid'), null, 'Returns null when given an invalid element ID');
