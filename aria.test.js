@@ -92,6 +92,47 @@ QUnit.test('Attributes are mapped to their type', (assert) => {
 
 });
 
+QUnit.module('Error handling', () => {
+
+	aria.attributes.errorTest = {
+		get: (attributeValue) => {
+			if (attributeValue == null) {
+				return 'default';
+			}
+			if (attributeValue == 'error') {
+				throw new Error();
+			}
+			throw new TypeError();
+		},
+		set: function (value) {
+			if (value == 'error') {
+				throw new Error();
+			}
+			throw new TypeError();
+		}
+	};
+
+	var element = QUnit.fixture();
+	var ariaInstance = aria(element);
+
+	QUnit.test('get()', (assert) => {
+		element.setAttribute('aria-errorTest', 'invalid');
+		assert.strictEqual(ariaInstance.errorTest, 'default', 'Returns the default value for an invalid attribute value');
+
+		element.setAttribute('aria-errorTest', 'error');
+		assert.throws(() => ariaInstance.errorTest, Error, 'Throws errors which are not TypeErrors');
+	});
+
+	QUnit.test('set()', (assert) => {
+		element.setAttribute('aria-errortest', 'default');
+		ariaInstance.errorTest = 'invalid';
+		assert.strictEqual(element.getAttribute('aria-errortest'), 'default', 'Does not apply an invalid value');
+
+		assert.throws(() => ariaInstance.errorTest = 'error', Error, 'Throws errors which are not TypeErrors');
+	});
+
+});
+
 QUnit.module('aria.types.trueFalse', () => {
 
 	let type = aria.types.trueFalse();

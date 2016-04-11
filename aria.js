@@ -236,13 +236,29 @@
 
 		return {
 			get: function () {
-				return valueConverter.get(element.getAttribute(prefixedAttributeName));
+				try {
+					return valueConverter.get(element.getAttribute(prefixedAttributeName));
+				} catch (error) {
+					if (error instanceof TypeError) {
+						return valueConverter.get(null);
+					} else {
+						throw error;
+					}
+				}
 			},
 			set: function (value) {
 				if (value == null) {
 					element.removeAttribute(prefixedAttributeName);
 				} else {
-					element.setAttribute(prefixedAttributeName, valueConverter.set(value));
+					try {
+						element.setAttribute(prefixedAttributeName, valueConverter.set(value));
+					} catch (error) {
+						if (error instanceof TypeError) {
+							// ignore set
+						} else {
+							throw error;
+						}
+					}
 				}
 			}
 		};
