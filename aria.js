@@ -114,8 +114,12 @@
 				return attributeValue.split(' ').map(itemType.get);
 			},
 			set: function (value) {
-				if (! Array.isArray(value))
-					value = [ value ];
+				if (! Array.isArray(value)) {
+					if (typeof value.length == 'number')
+						value = [].slice.call(value); // array-like
+					else
+						value = [ value ];
+				}
 				return value.map(itemType.set).filter(identity).join(' ');
 			}
 		}}

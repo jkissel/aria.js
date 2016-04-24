@@ -306,6 +306,7 @@ QUnit.module('aria.types.list', () => {
 	QUnit.test('set()', assert => {
 		assert.deepEqual(type.set([ QUnit.fixture(), document.body ]), 'qunit-fixture', 'Returns space separated list for an array of values');
 		assert.deepEqual(type.set(QUnit.fixture()), 'qunit-fixture', 'Works also for single values');
+		assert.deepEqual(type.set($(QUnit.fixture())), 'qunit-fixture', 'Works also for array-like values');
 	});
 
 });
