@@ -310,3 +310,33 @@ QUnit.module('aria.types.list', () => {
 	});
 
 });
+
+QUnit.module('jquery-aria', () => {
+
+	/* global $ */
+
+	QUnit.test('get', assert => {
+		assert.strictEqual($('<div aria-hidden="true">').aria('hidden'), true, 'Returns the value of the first element');
+		assert.strictEqual($().aria('hidden'), undefined, 'Returns undefined if the collection is empty');
+		assert.ok($('<div aria-activedescendant="qunit-fixture">').aria('activedescendant') instanceof $, 'Returns a jQuery collection when getting an ID reference');
+		assert.ok($('<div aria-controls="qunit-fixture">').aria('controls') instanceof $, 'Returns a jquery collection when getting an ID reference list');
+	});
+
+	QUnit.test('set', assert => {
+		assert.ok(
+			$('<div><div>')
+				.aria('hidden', true)
+				.toArray()
+				.every(element => aria(element).hidden),
+			'Sets the value on all elements in the collection');
+
+		assert.ok($('<div>').aria('hidden', value => ! value).aria('hidden'), 'Accepts a value function');
+
+		var fixture;
+		fixture = QUnit.fixture();
+		assert.ok($('<div>').aria('activedescendant', $(fixture)).aria('activedescendant').is(fixture), 'Accepts a jQuery collection when setting an ID reference');
+		fixture = [ QUnit.fixture(), QUnit.fixture() ];
+		assert.deepEqual($('<div>').aria('controls', $(fixture)).aria('controls').toArray(), fixture, 'Accepts a jQuery collection when setting an ID reference list');
+	});
+
+});
