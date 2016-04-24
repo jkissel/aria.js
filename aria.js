@@ -240,7 +240,7 @@
 					return valueConverter.get(element.getAttribute(prefixedAttributeName));
 				} catch (error) {
 					if (error instanceof TypeError) {
-						return valueConverter.get(null);
+						return valueConverter.get(null); // return default value
 					} else {
 						throw error;
 					}
